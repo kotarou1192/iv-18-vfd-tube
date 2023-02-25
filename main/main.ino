@@ -91,6 +91,11 @@ void loop()
   {
     printHyphen();
     duration++;
+    if (duration > 300)
+    {
+      printHello();
+      return;
+    }
   }
   if (duration > 5)
   {
