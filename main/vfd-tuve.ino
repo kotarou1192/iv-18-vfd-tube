@@ -23,6 +23,31 @@ void printDate()
   printDigits(datetime);
 }
 
+void printTime()
+{
+  DateTime now = rtc.now();
+
+  int hour = now.hour();
+  int splittedHour[2] = {0, 0};
+  splitDigit(hour % 100, splittedHour);
+  int minute = now.minute();
+  int splittedMinute[2] = {0, 0};
+  splitDigit(minute, splittedMinute);
+  int second = now.second();
+  int splittedSecond[2] = {0, 0};
+  splitDigit(second, splittedSecond);
+  Digits datetime = { numToSegment(splittedSecond[0]),
+                    numToSegment(splittedSecond[1]),
+                    HYPHEN,
+                    numToSegment(splittedMinute[0]),
+                    numToSegment(splittedMinute[1]),
+                    HYPHEN,
+                    numToSegment(splittedHour[0]),
+                    numToSegment(splittedHour[1]) };
+
+  printDigits(datetime);
+}
+
 void printDigits(Digits values)
 {
   for (int i = 0; i < 8; i++)

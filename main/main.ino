@@ -26,5 +26,5 @@ void setup()
 
 void loop()
 {
-  printDate();
+  printTime();
 }

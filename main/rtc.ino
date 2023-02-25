@@ -11,7 +11,8 @@ void setupRtc()
     while (1)
       delay(10);
   }
-  if (rtc.lostPower())
+  // DO NOT ADJUST TIME AUTOMATICALY
+  if (false)
   {
     Serial.println("RTC lost power, let's set the time!");
     // When time needs to be set on a new device, or after a power loss, the
