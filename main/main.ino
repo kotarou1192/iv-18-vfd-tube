@@ -23,9 +23,14 @@ typedef int Digits[8];
 // 4 is pressure
 volatile int selector = 4;
 
-void ICACHE_RAM_ATTR handleInterrupt()
+void handleInterrupt()
 {
-  offAllLED();
+  // off all
+  digitalWrite(DATE_LED, LOW);
+  digitalWrite(TIME_LED, LOW);
+  digitalWrite(TEMP_LED, LOW);
+  digitalWrite(HUM_LED, LOW);
+  digitalWrite(HPA_LED, LOW);
   selector = selector + 1;
   switch (selector)
   {
@@ -54,16 +59,6 @@ void ICACHE_RAM_ATTR handleInterrupt()
   }
 }
 
-void offAllLED()
-{
-  // off all
-  digitalWrite(DATE_LED, LOW);
-  digitalWrite(TIME_LED, LOW);
-  digitalWrite(TEMP_LED, LOW);
-  digitalWrite(HUM_LED, LOW);
-  digitalWrite(HPA_LED, LOW);
-}
-
 void setup()
 {
   selector = 0;
@@ -81,7 +76,6 @@ void setup()
   pinMode(HUM_LED, OUTPUT);
   pinMode(HPA_LED, OUTPUT);
   pinMode(INTERRUPT_PIN, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), handleInterrupt, FALLING);
 
   digitalWrite(SRCLR, LOW);
   digitalWrite(SRCLR, HIGH);
@@ -91,6 +85,16 @@ void setup()
 
 void loop()
 {
+  int duration = 0;
+  while (digitalRead(INTERRUPT_PIN) == LOW)
+  {
+    printHyphen();
+    duration++;
+  }
+  if (duration > 5)
+  {
+    handleInterrupt();
+  }
   switch (selector)
   {
   case 0:

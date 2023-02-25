@@ -89,6 +89,12 @@ void printErr()
   printDigits(err);
 }
 
+void printHyphen()
+{
+  Digits line = {HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN};
+  printDigits(line);
+}
+
 void printHello()
 {
   const int h = B11000111;
