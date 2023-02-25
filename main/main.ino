@@ -21,7 +21,7 @@ typedef int Digits[8];
 // 2 is temp
 // 3 is humidity
 // 4 is pressure
-volatile int selector = 4;
+int selector = 0;
 
 void handleInterrupt()
 {
@@ -61,7 +61,6 @@ void handleInterrupt()
 
 void setup()
 {
-  selector = 0;
   // Serial.begin(115200);
   pinMode(SER, OUTPUT);
   pinMode(SRCLR, OUTPUT);
@@ -89,15 +88,15 @@ void loop()
   int duration = 0;
   while (digitalRead(INTERRUPT_PIN) == LOW)
   {
-    printHyphen();
+    printLoading();
     duration++;
-    if (duration > 300)
+    if (duration > 2)
     {
       printHello();
       return;
     }
   }
-  if (duration > 5)
+  if (duration > 0)
   {
     handleInterrupt();
   }

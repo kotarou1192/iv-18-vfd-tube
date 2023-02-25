@@ -45,7 +45,12 @@ void printTime()
                      numToSegment(splittedHour[0]),
                      numToSegment(splittedHour[1])};
 
-  printDigits(datetime);
+  circleEffector(datetime, 0);
+  datetime[0] = numToSegment(splittedSecond[0]);
+  while (rtc.now().second() == second)
+  {
+    printDigits(datetime);
+  }
 }
 
 void printDigits(Digits values)
@@ -89,10 +94,47 @@ void printErr()
   printDigits(err);
 }
 
-void printHyphen()
+void printLoading()
 {
   Digits line = {HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN};
-  printDigits(line);
+  for (int i = 2; i < 6; i++)
+  {
+    for (int j = 0; j < 8; j++)
+    {
+      switch (j)
+      {
+      case 0:
+        line[i] = B00100000;
+        break;
+      case 1:
+        line[i] = B10100000;
+        break;
+      case 2:
+        line[i] = B10000100;
+        break;
+      case 3:
+        line[i] = B00001100;
+        break;
+      case 4:
+        line[i] = B00001010;
+        break;
+      case 5:
+        line[i] = B01000010;
+        break;
+      case 6:
+        line[i] = B01100000;
+        break;
+      case 7:
+        line[i] = B00100000;
+        break;
+      }
+      for (int n = 0; n < 3; n++)
+      {
+        printDigits(line);
+      }
+    }
+    line[i] = HYPHEN;
+  }
 }
 
 void printHello()
@@ -128,6 +170,8 @@ void printHello()
 
   digitalWrite(SRCLR, LOW);
   digitalWrite(SRCLR, HIGH);
+  selector = 4;
+  handleInterrupt();
 }
 
 void splitDigit(int nums, int *result)
@@ -139,6 +183,38 @@ void splitDigit(int nums, int *result)
     if (first == nums)
       break;
     nums = (nums - first) / 10;
+  }
+}
+
+void circleEffector(Digits arr, int pos)
+{
+  for (int j = 0; j < 5; j++)
+  {
+    switch (j)
+    {
+    case 0:
+      arr[pos] = B00100000;
+      break;
+    case 1:
+      arr[pos] = B10000000;
+      break;
+    case 2:
+      arr[pos] = B00000100;
+      break;
+    case 3:
+      arr[pos] = B00001000;
+      break;
+    case 4:
+      arr[pos] = B00000010;
+      break;
+    case 5:
+      arr[pos] = B01000000;
+      break;
+    }
+    for (int n = 0; n < 5; n++)
+    {
+      printDigits(arr);
+    }
   }
 }
 
