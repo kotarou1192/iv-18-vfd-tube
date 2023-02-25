@@ -2,9 +2,11 @@
 #define SRCLK 2
 #define RCLK 10
 #define SER 9
+#define SERIAL_BAUD 115200
 
 void setup()
 {
+  Serial.begin(SERIAL_BAUD);
   pinMode(SER, OUTPUT);
   pinMode(SRCLR, OUTPUT);
   pinMode(SRCLK, OUTPUT);
@@ -12,6 +14,7 @@ void setup()
 
   digitalWrite(SRCLR, LOW);
   digitalWrite(SRCLR, HIGH);
+  setupRtc();
 }
 
 void loop()
