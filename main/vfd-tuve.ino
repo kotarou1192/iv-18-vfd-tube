@@ -11,14 +11,14 @@ void printDate()
   int day = now.day();
   int splittedDay[2] = {0, 0};
   splitDigit(day, splittedDay);
-  Digits datetime = { numToSegment(splittedDay[0]),
-                    numToSegment(splittedDay[1]),
-                    HYPHEN,
-                    numToSegment(splittedMonth[0]),
-                    numToSegment(splittedMonth[1]),
-                    HYPHEN,
-                    numToSegment(splittedYear[0]),
-                    numToSegment(splittedYear[1]) };
+  Digits datetime = {numToSegment(splittedDay[0]),
+                     numToSegment(splittedDay[1]),
+                     HYPHEN,
+                     numToSegment(splittedMonth[0]),
+                     numToSegment(splittedMonth[1]),
+                     HYPHEN,
+                     numToSegment(splittedYear[0]),
+                     numToSegment(splittedYear[1])};
 
   printDigits(datetime);
 }
@@ -36,14 +36,14 @@ void printTime()
   int second = now.second();
   int splittedSecond[2] = {0, 0};
   splitDigit(second, splittedSecond);
-  Digits datetime = { numToSegment(splittedSecond[0]),
-                    numToSegment(splittedSecond[1]),
-                    HYPHEN,
-                    numToSegment(splittedMinute[0]),
-                    numToSegment(splittedMinute[1]),
-                    HYPHEN,
-                    numToSegment(splittedHour[0]),
-                    numToSegment(splittedHour[1]) };
+  Digits datetime = {numToSegment(splittedSecond[0]),
+                     numToSegment(splittedSecond[1]),
+                     HYPHEN,
+                     numToSegment(splittedMinute[0]),
+                     numToSegment(splittedMinute[1]),
+                     HYPHEN,
+                     numToSegment(splittedHour[0]),
+                     numToSegment(splittedHour[1])};
 
   printDigits(datetime);
 }
@@ -58,7 +58,7 @@ void printDigits(Digits values)
     shiftOut(SER, SRCLK, LSBFIRST, values[i]);
     // on
     digitalWrite(RCLK, HIGH);
-    delay(2);
+    delay(1);
   }
 }
 
@@ -76,13 +76,22 @@ void printNum(int num, int dotDigit)
     shiftOut(SER, SRCLK, LSBFIRST, setDotToNum(numToSegment(nums[i]), i == dotDigit));
     // on
     digitalWrite(RCLK, HIGH);
-    delay(3);
+    delay(1);
   }
+}
+
+void printErr()
+{
+  const int e = B10101101;
+  const int r = B10000001;
+  const int o = B11100001;
+  Digits err = {NONE, r, o, r, r, e, NONE, NONE};
+  printDigits(err);
 }
 
 void splitDigit(int nums, int *result)
 {
-  for (int i = 0; i < sizeof(result); i++)
+  for (int i = 0; i < 8; i++)
   {
     int first = nums % 10;
     result[i] = first;
@@ -157,7 +166,6 @@ int numToSegment(int num)
   const int seven = B01001010;
   const int eight = B11101111;
   const int nine = B01101111;
-  const int none = B00000000;
 
   switch (num)
   {
@@ -192,7 +200,7 @@ int numToSegment(int num)
     return nine;
     break;
   default:
-    return none;
+    return NONE;
     break;
   }
 }
