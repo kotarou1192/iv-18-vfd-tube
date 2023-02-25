@@ -1,6 +1,45 @@
+void printDate()
+{
+  DateTime now = rtc.now();
+
+  int year = now.year();
+  int splittedYear[2] = {0, 0};
+  splitDigit(year % 100, splittedYear);
+  int month = now.month();
+  int splittedMonth[2] = {0, 0};
+  splitDigit(month, splittedMonth);
+  int day = now.day();
+  int splittedDay[2] = {0, 0};
+  splitDigit(day, splittedDay);
+  Digits datetime = { numToSegment(splittedDay[0]),
+                    numToSegment(splittedDay[1]),
+                    HYPHEN,
+                    numToSegment(splittedMonth[0]),
+                    numToSegment(splittedMonth[1]),
+                    HYPHEN,
+                    numToSegment(splittedYear[0]),
+                    numToSegment(splittedYear[1]) };
+
+  printDigits(datetime);
+}
+
+void printDigits(Digits values)
+{
+  for (int i = 0; i < 8; i++)
+  {
+    // off
+    digitalWrite(RCLK, LOW);
+    shiftOut(SER, SRCLK, LSBFIRST, numToDigit(i));
+    shiftOut(SER, SRCLK, LSBFIRST, values[i]);
+    // on
+    digitalWrite(RCLK, HIGH);
+    delay(2);
+  }
+}
+
 void printNum(int num, int dotDigit)
 {
-  int nums[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
+  Digits nums = {-1, -1, -1, -1, -1, -1, -1, -1};
   splitDigit(num, nums);
   for (int i = 0; i < 8; i++)
   {
@@ -18,7 +57,7 @@ void printNum(int num, int dotDigit)
 
 void splitDigit(int nums, int *result)
 {
-  for (int i = 0; i < 8; i++)
+  for (int i = 0; i < sizeof(result); i++)
   {
     int first = nums % 10;
     result[i] = first;

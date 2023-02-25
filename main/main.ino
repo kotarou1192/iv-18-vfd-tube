@@ -1,8 +1,14 @@
+#include "RTClib.h"
+
+#define HYPHEN B00000001
+#define NOTHING B00000000
 #define SRCLR 16
 #define SRCLK 2
 #define RCLK 10
 #define SER 9
 #define SERIAL_BAUD 115200
+
+typedef int Digits[8];
 
 void setup()
 {
@@ -20,8 +26,5 @@ void setup()
 
 void loop()
 {
-  for (int i = 0; i < 100000000; i++)
-  {
-    printNum(i, 4);
-  }
+  printDate();
 }
