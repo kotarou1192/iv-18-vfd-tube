@@ -1,7 +1,7 @@
 #define SRCLR 16
 #define SRCLK 2
-#define RCLK 5
-#define SER 4
+#define RCLK 10
+#define SER 9
 
 void setup()
 {
