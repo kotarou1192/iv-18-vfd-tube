@@ -89,6 +89,41 @@ void printErr()
   printDigits(err);
 }
 
+void printHello()
+{
+  const int h = B11000111;
+  const int e = B10101101;
+  const int l = B10100100;
+  const int o = B11101110;
+  int completed = 1;
+  int cnt = 0;
+  int times = 0;
+  int sleeper = 0;
+  Digits arr = {HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN, HYPHEN};
+  const Digits hello = {HYPHEN, o, l, l, e, h};
+  while (times < 14)
+  {
+    printDigits(arr);
+    cnt++;
+    if (cnt % 20 == 0)
+    {
+      do
+      {
+        sleeper++;
+        printDigits(arr);
+      } while (times == 7 && sleeper < 70);
+      times++;
+      for (int j = times; j > 0; j--)
+      {
+        arr[(times - j) > 7 ? j - times : times - j] = hello[j < 6 && (times - j) < 8 ? 6 - j : 0];
+      }
+    }
+  }
+
+  digitalWrite(SRCLR, LOW);
+  digitalWrite(SRCLR, HIGH);
+}
+
 void splitDigit(int nums, int *result)
 {
   for (int i = 0; i < 8; i++)

@@ -86,6 +86,7 @@ void setup()
   digitalWrite(SRCLR, LOW);
   digitalWrite(SRCLR, HIGH);
   digitalWrite(DATE_LED, HIGH);
+  printHello();
 }
 
 void loop()
