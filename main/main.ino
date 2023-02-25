@@ -15,6 +15,7 @@ void setup()
   digitalWrite(SRCLR, LOW);
   digitalWrite(SRCLR, HIGH);
   setupRtc();
+  setupBME280();
 }
 
 void loop()
