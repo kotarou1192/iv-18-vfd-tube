@@ -25,18 +25,12 @@ volatile int selector = 4;
 
 void ICACHE_RAM_ATTR handleInterrupt()
 {
-  // off all
-  digitalWrite(DATE_LED, LOW);
-  digitalWrite(TIME_LED, LOW);
-  digitalWrite(TEMP_LED, LOW);
-  digitalWrite(HUM_LED, LOW);
-  digitalWrite(HPA_LED, LOW);
+  offAllLED();
   selector = selector + 1;
   switch (selector)
   {
   case 0:
-    // date
-    digitalWrite(DATE_LED, HIGH);
+    // 誰もここに到達しない
     break;
   case 1:
     // time
@@ -54,13 +48,26 @@ void ICACHE_RAM_ATTR handleInterrupt()
     break;
   default:
     selector = 0;
+    // date
+    digitalWrite(DATE_LED, HIGH);
     break;
   }
+}
+
+void offAllLED()
+{
+  // off all
+  digitalWrite(DATE_LED, LOW);
+  digitalWrite(TIME_LED, LOW);
+  digitalWrite(TEMP_LED, LOW);
+  digitalWrite(HUM_LED, LOW);
+  digitalWrite(HPA_LED, LOW);
 }
 
 void setup()
 {
   selector = 0;
+  // Serial.begin(115200);
   pinMode(SER, OUTPUT);
   pinMode(SRCLR, OUTPUT);
   pinMode(SRCLK, OUTPUT);
@@ -78,7 +85,7 @@ void setup()
 
   digitalWrite(SRCLR, LOW);
   digitalWrite(SRCLR, HIGH);
-  digitalWrite(HPA_LED, HIGH);
+  digitalWrite(DATE_LED, HIGH);
 }
 
 void loop()
