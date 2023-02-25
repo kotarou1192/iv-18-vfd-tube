@@ -66,8 +66,6 @@ void setup()
   pinMode(SRCLR, OUTPUT);
   pinMode(SRCLK, OUTPUT);
   pinMode(RCLK, OUTPUT);
-  setupRtc();
-  setupBME280();
   // 割り込み
   pinMode(DATE_LED, OUTPUT);
   pinMode(TIME_LED, OUTPUT);
@@ -79,6 +77,8 @@ void setup()
   digitalWrite(SRCLR, LOW);
   digitalWrite(SRCLR, HIGH);
   digitalWrite(DATE_LED, HIGH);
+  setupRtc();
+  setupBME280();
   printHello();
 }
 

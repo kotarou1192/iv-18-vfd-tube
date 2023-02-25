@@ -9,7 +9,7 @@ void setupRtc()
     // Serial.println("Couldn't find RTC");
     // Serial.flush();
     while (1)
-      delay(10);
+      printError();
   }
   // DO NOT ADJUST TIME AUTOMATICALY
   if (rtc.lostPower())
