@@ -85,6 +85,7 @@ void setup()
 
 void loop()
 {
+  // 割り込みで実装しようとして諦めた、表示切り替え処理
   int duration = 0;
   while (digitalRead(INTERRUPT_PIN) == LOW)
   {
@@ -95,6 +96,7 @@ void loop()
   {
     handleInterrupt();
   }
+  ///////////////////////////////////////////////
   switch (selector)
   {
   case 0:

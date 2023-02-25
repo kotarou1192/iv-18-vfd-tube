@@ -26,18 +26,36 @@ void printBME280Data(int select)
   bme.read(pres, temp, hum, tempUnit, presUnit);
   int hpa = (int)pres;
 
-  switch (select)
+  // 数値が39.9-40.0とかを行き来すると、なんて表示されているのかわからない
+  // ループして待ってあげることで、更新頻度を下げる。
+  for (int i = 0; i < 200; i++)
   {
-  case 0:
-    printNum((int)(temp * 100) / 10, 1);
-    break;
-  case 1:
-    printNum((int)(hum * 100) / 10, 1);
-    break;
-  case 2:
-    printNum(hpa / 10, 1);
-    break;
-  default:
-    printErr();
+    // スムーズに切り替えるためのスイッチ監視
+    int duration = 0;
+    while (digitalRead(INTERRUPT_PIN) == LOW)
+    {
+      printHyphen();
+      duration++;
+    }
+    if (duration > 5)
+    {
+      handleInterrupt();
+      return;
+    }
+    ////////////////////////////////////////
+    switch (select)
+    {
+    case 0:
+      printNum((int)(temp * 100) / 10, 1);
+      break;
+    case 1:
+      printNum((int)(hum * 100) / 10, 1);
+      break;
+    case 2:
+      printNum(hpa / 10, 1);
+      break;
+    default:
+      printErr();
+    }
   }
 }
