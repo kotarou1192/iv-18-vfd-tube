@@ -12,5 +12,4 @@ IV-18 is a VFD indicator tube. It has 8 digits, 7 segments and decimal points. F
 This is temporally case that made by cardboard. I want to upgrade this case with my 3d printer, but i have no time to.
 
 This electric work moves like this:
-
-<https://github.com/kotarou1192/iv-18-vfd-tube/images/main.mp4>
+![output](https://user-images.githubusercontent.com/51397938/224518846-5322df8a-7407-43e6-b1a2-a909fc25387a.gif)
